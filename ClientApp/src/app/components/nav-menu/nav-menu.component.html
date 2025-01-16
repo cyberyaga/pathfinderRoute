@@ -1,0 +1,33 @@
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]='["/"]'><i class="fas fa-home"></i> Home</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/pickups"]'><i class="fas fa-crosshairs"></i> Pickups</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/routes"]'><i class="fas fa-shipping-fast"></i> Routes</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/customers"]'><i class="fas fa-street-view"></i> Customers</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/vehicles"]'><i class="fas fa-shuttle-van"></i> Vehicles</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/drivers"]'><i class="fas fa-id-card"></i> Drivers</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/drivers/assigned-routes"]'><i class="fas fa-list-alt"></i> Assigned
+        Routes</a>
+    </li>
+    <li class="nav-item" [routerLinkActive]="[ 'active' ]">
+      <a class="nav-link" [routerLink]='["/admin"]'><i class="fas fa-users-cog"></i> Administration</a>
+    </li>
+  </ul>
+
+<!-- <br />
+<app-user-info *ngIf="authService.isLoggedIn()"></app-user-info>
+<div>
+    <button *ngIf="!authService.isLoggedIn()" class="form-control" (click)="logUserIn()">Login</button>
+</div> -->

@@ -1,0 +1,3 @@
+<agm-map #map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [streetViewControl]="showStreetView" [fullscreenControl]="showFullScreen" (mapReady)="mapReady($event)">
+    <agm-marker [latitude]="m.latitude" [longitude]="m.longitude" [opacity]="m.opacity" *ngFor="let m of markers"></agm-marker>
+</agm-map>

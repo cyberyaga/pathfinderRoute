@@ -1,0 +1,12 @@
+obj/Debug/netcoreapp2.2/pathfinderRoute.csprojAssemblyReference.cache
+obj/Debug/netcoreapp2.2/pathfinderRoute.csproj.CoreCompileInputs.cache
+obj/Debug/netcoreapp2.2/pathfinderRoute.pdb
+obj/Debug/netcoreapp2.2/pathfinderRoute.dll
+bin/Debug/netcoreapp2.2/pathfinderRoute.pdb
+bin/Debug/netcoreapp2.2/pathfinderRoute.dll
+bin/Debug/netcoreapp2.2/pathfinderRoute.dll
+
+
+
+bin/*
+Logs/*

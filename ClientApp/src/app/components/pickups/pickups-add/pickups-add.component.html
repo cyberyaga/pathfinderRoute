@@ -1,0 +1,272 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page" *ngIf="formMode == 'Pickup'">
+      <a [routerLink]='["/pickups"]'>Pickups</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page" *ngIf="formMode == 'Route'">
+      <a [routerLink]='["/routes"]'>Routes</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page" *ngIf="formMode == 'Route'">
+      <a [routerLink]='["/routes/route-view/" + model.routeId ]'
+        [queryParams]="{ routeDate: model.routeDate | date: 'yyyy-MM-dd' }">Route</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Pickups Add</li>
+  </ol>
+</nav>
+<form [formGroup]="form" (ngSubmit)="submit(form.value)" class="needs-validation"
+  (keydown.enter)="$event.preventDefault()">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Customer
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <div class="input-group">
+              <ng-template #customItemTemplate let-model="item" let-index="index">
+                <h6>
+                  <b>Customer Name:</b> {{model.firstName + ' ' + model.lastName}}
+                  <b>Phone:</b> {{model.phoneNumber}}</h6>
+              </ng-template>
+              <input type="text" class="form-control" name="search" placeholder="Search Customer" autocomplete="off"
+                formControlName="searchCustname" [typeahead]="customers$"
+                (typeaheadLoading)="changeTypeaheadLoading($event)" (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                typeaheadOptionsLimit="7" typeaheadWaitMs="500" [typeaheadItemTemplate]="customItemTemplate"
+                typeaheadOptionField="firstName" tabindex="1">
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="typeaheadLoading"><em><img src="assets/images/loading60.gif"> Searching...</em></div>
+          </div>
+          <div class="form-row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control"
+                  [ngClass]="{'is-invalid' : form.get('firstName').touched && form.get('firstName').invalid}" tabindex="2">
+                <div class="invalid-feedback" *ngIf="form.get('firstName').hasError('required')">
+                  First Name is required.
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" tabindex="3">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="number" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber"
+                  class="form-control"
+                  [ngClass]="{'is-invalid' : form.get('phoneNumber').touched && form.get('phoneNumber').invalid}" tabindex="4">
+                <div class="invalid-feedback" *ngIf="form.get('phoneNumber').hasError('required')">Phone number is
+                  required.</div>
+                <div class="invalid-feedback" *ngIf="form.get('phoneNumber').hasError('minlength')">Phone number must be
+                  at least 10 digits.</div>
+              </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="smsEnabled" formControlName="smsEnabled" tabindex="5"> Is SMS Enabled
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <br />
+      <div class="card">
+        <div class="card-header">
+          Trip
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <b>Distance:</b> {{ distance }}<br />
+              <b>Duration:</b> {{ duration }}
+            </div>
+            <div class="col">
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm"><b>Base Price:</b></label>
+                <div class="col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">$</div>
+                    </div>
+                    <input type="text" class="form-control" [value]="currentRoute ? currentRoute.basePrice : 0"
+                      readonly tabindex="-1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" *ngFor="let a of additionalPrice">
+                <label for="colFormLabelSm"
+                  class="col-sm-6 col-form-label col-form-label-sm"><b>{{ a.boundaryName }}:</b></label>
+                <div class="col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">$</div>
+                    </div>
+                    <input type="text" class="form-control" [value]="a.additionalCost" readonly tabindex="-1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm"><b>Total Cost:</b></label>
+                <div class="col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">$</div>
+                    </div>
+                    <input type="text" class="form-control" formControlName="pickupPrice" tabindex="-1">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><br />
+      <div class="card" *ngIf="formMode == 'Route'">
+        <div class="card-header">
+          Route
+        </div>
+        <div class="card-body">
+          <app-route-picker [selectedRoute]="model.routeId" [selectedDate]="model.routeDate" [minimumDate]="minDateVal"
+            (routeChange)="routeChange($event)" tabindex="-1"></app-route-picker>
+        </div>
+      </div><br />
+      <div class="card" *ngIf="formMode == 'Pickup'">
+        <div class="card-header">
+          Vehicle
+        </div>
+        <div class="card-body">
+          <input type="text" class="form-control" id="exampleInputAmount" placeholder="Select Vehicle">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-lg btn-primary" [disabled]="!form.valid || !fromValid || !toValid" tabindex="10">Add
+        Pickup</button>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <i class="far fa-map"></i> Map
+        </div>
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [streetViewControl]="false"
+          [fullscreenControl]="true" (mapReady)="mapReady($event)" tabindex="-1">
+          <agm-marker [latitude]="latitude" [longitude]="longitude" *ngIf="showMarker"></agm-marker>
+          <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"
+            (onChange)="dirChange($event)"></agm-direction>
+          <agm-polygon *ngFor="let b of assignedPriceRoute" [paths]="b.boundary.plainCoord"
+            [fillColor]="b.boundary.color" [clickable]="false"></agm-polygon>
+        </agm-map>
+      </div> <br />
+      <div class="card">
+        <div class="card-header">
+          Destination
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="pickUp">Pickup</label>
+                <div class="input-group">
+                  <input placeholder="search for location" type="text" class="form-control" id="pickUp" name="pickUp"
+                    #pickupsearch formControlName="pickUp" autocomplete="off" tabindex="6"
+                    [ngClass]="{'is-invalid' : (form.get('pickUp').touched && form.get('pickUp').invalid) || fromOutofBound || fromNotFrom }">
+                  <div *ngIf="form.get('pickUp').touched && form.get('pickUp').invalid" class="invalid-feedback">
+                    You must supply a pickup address.
+                  </div>
+                  <div *ngIf="fromOutofBound" class="invalid-feedback">
+                    The address entered is not inside a defined territory bound.
+                  </div>
+                  <div *ngIf="fromNotFrom" class="invalid-feedback">
+                    The address entered is not inside the pickup zone.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="dropOff">Drop Off</label>
+                <div class="input-group">
+                  <input placeholder="search for location" type="text" class="form-control" id="dropOff" name="dropOff"
+                    #dropoffsearch formControlName="dropOff" autocomplete="off" tabindex="7"
+                    [ngClass]="{'is-invalid' : (form.get('dropOff').touched && form.get('dropOff').invalid) || toOutofBound || toNotTo }">
+                  <div *ngIf="form.get('dropOff').touched && form.get('dropOff').invalid" class="invalid-feedback">
+                    You must supply a dropoff address.
+                  </div>
+                  <div *ngIf="toOutofBound" class="invalid-feedback">
+                    The address entered is not inside a defined territory bound.
+                  </div>
+                  <div *ngIf="toNotTo" class="invalid-feedback">
+                    The address entered is not inside the drop off zone.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="passengers">Passengers</label>
+                <input type="number" class="form-control" id="passengers" name="passengers" formControlName="passengers"
+                  (change)="calculateCost(undefined)" tabindex="8">
+              </div>
+              <div *ngIf="form.get('passengers').touched && form.get('passengers').invalid" class="invalid-feedback">
+                <!-- <div *ngIf="form.get('passengers').errors.required"># of passengers.</div> -->
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group" *ngIf="formMode == 'Pickup'">
+                <label for="pickUpDate">Date</label>
+                <input type="text" class="form-control" id="pickUpDate" name="pickUpDate" formControlName="pickUpDate"
+                  [ngModel]="model.PickupTime" showWeekNumbers="false" [minDate]="minDateVal" bsDatepicker>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group" *ngIf="formMode == 'Pickup'">
+                <label for="pickUpTime">Time</label>
+                <timepicker id="pickUpTime" name="pickUpTime" formControlName="pickUpTime"></timepicker>
+              </div>
+            </div>
+            <div class="col">
+              <div class="checkbox" *ngIf="formMode == 'Pickup'">
+                <label>
+                  <input type="checkbox" name="pickUpASAP" formControlName="pickUpASAP" #asapcheck
+                    (change)="toggleAsap(asapcheck)"> Pickup ASAP
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="notes">Notes</label>
+                <input type="text" class="form-control" id="notes" name="notes" formControlName="notes" tabindex="9">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+
+    </div>
+  </div>
+</form>

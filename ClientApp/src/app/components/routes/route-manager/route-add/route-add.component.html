@@ -1,0 +1,309 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/routes"]'>Routes</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/routes/route-manager"]'>Route Manager</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page" *ngIf="!currentRoute">Route Add</li>
+    <li class="breadcrumb-item active" aria-current="page" *ngIf="currentRoute">Route Edit</li>
+  </ol>
+</nav>
+<form [formGroup]="form" (ngSubmit)="submit(form.value)" class="needs-validation">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Route
+          <input type="text" name="id" formControlName="id" hidden>
+          <input type="text" name="fromGeoLat" formControlName="fromGeoLat" hidden>
+          <input type="text" name="fromGeoLong" formControlName="fromGeoLong" hidden>
+          <input type="text" name="toGeoLat" formControlName="toGeoLat" hidden>
+          <input type="text" name="toGeoLong" formControlName="toGeoLong" hidden>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="col">
+              <div class="form-group">
+                <label for="routeName">Route Name</label>
+                <input type="text" name="routeName" formControlName="routeName" class="form-control"
+                  [ngClass]="{'is-invalid':form.get('routeName').touched && form.get('routeName').invalid}">
+                <div class="invalid-feedback">
+                  You must specify a route name.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <div class="form-group">
+                <label for="routeDescription">Route Description</label>
+                <input type="text" id="routeDescription" name="routeDescription" formControlName="routeDescription"
+                  class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="scheduledDeparture">Route Departs</label>
+                <timepicker formControlName="scheduledDeparture"
+                  [ngClass]="{'is-invalid': form.get('scheduledDeparture').invalid}"></timepicker>
+                <div class="invalid-feedback">
+                  Please specify the time the route departs.
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <label>Route Days</label>
+              <br />
+              <br />
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDayMon" id="routeDayMon">
+                <label class="custom-control-label" for="routeDayMon">Monday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDayTue" id="routeDayTue">
+                <label class="custom-control-label" for="routeDayTue">Tuesday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDayWed" id="routeDayWed">
+                <label class="custom-control-label" for="routeDayWed">Wednesday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDayThu" id="routeDayThu">
+                <label class="custom-control-label" for="routeDayThu">Thursday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDayFri" id="routeDayFri">
+                <label class="custom-control-label" for="routeDayFri">Friday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDaySat" id="routeDaySat">
+                <label class="custom-control-label" for="routeDaySat">Saturday</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" class="custom-control-input" formControlName="routeDaySun" id="routeDaySun">
+                <label class="custom-control-label" for="routeDaySun">Sunday</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
+          <div class="form-row">
+            <div class="col-3">
+              <div class="form-group">
+                <label for="routeStarts">Route Starts</label>
+                <input type="text" id="routeStart" name="routeStarts" formControlName="routeStarts" class="form-control"
+                  bsDatepicker [minDate]="minDate"
+                  [ngClass]="{'is-invalid':form.get('routeStarts').touched && form.get('routeStarts').invalid}">
+                <div class="invalid-feedback">
+                  Please specify the start date of this route.
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <label for="routeExpires">Route Expires</label>
+              <input type="text" id="routeExpires" name="routeExpires" formControlName="routeExpires"
+                class="form-control" bsDatepicker [minDate]="this.form.value.routeStarts">
+            </div>
+            <!-- <div class="col-6 collapse">
+              <label for="vehicleId">Assigned Vehicle</label>
+              <select id="vehicleId" name="vehicleId" formControlName="vehicleId" class="form-control">
+                <option *ngFor="let v of vehicles" [(value)]="v.id">{{ v.description }} - C: {{ v.capacity }}</option>
+              </select>
+            </div> -->
+            <div class="col-3">
+              <div class="form-group">
+                <label for="basePrice">Base Price</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">$</span>
+                  </div>
+                  <input type="text" id="basePrice" name="basePrice" formControlName="basePrice" class="form-control"
+                    [ngClass]="{'is-invalid':form.get('basePrice').touched && form.get('basePrice').invalid}">
+                </div>
+                <div class="invalid-feedback">
+                  Please specify a base price.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card" [ngClass]="{ 'collapse' : pricingBoundaryEnabled }">
+        <div class="card-header">
+          Route Destination
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">From:</span>
+                </div>
+                <input type="text" class="form-control" name="fromAddress" formControlName="fromAddress"
+                  [ngClass]="{'is-invalid':form.get('fromAddress').touched && form.get('fromAddress').invalid}">
+              </div>
+              <div class="invalid-feedback">
+                Please specify where the route starts from.
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">To:</span>
+                </div>
+                <input type="text" class="form-control" name="toAddress" formControlName="toAddress"
+                  [ngClass]="{'is-invalid':form.get('toAddress').touched && form.get('toAddress').invalid}">
+              </div>
+              <div class="invalid-feedback">
+                Please specify where the route ends.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header">
+          Map
+        </div>
+        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [streetViewControl]="false">
+          <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"></agm-direction>
+          <agm-polygon *ngFor="let b of assignedPriceRoute" [paths]="b.boundary.plainCoord" [fillColor]="b.boundary.color" [clickable]="false"></agm-polygon>
+        </agm-map>
+      </div>
+      <br>
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" formControlName="pricingBoundaryEnabled"
+                  id="pricingBoundaryEnabled">
+                <label class="custom-control-label" for="pricingBoundaryEnabled">Pricing Boundaries</label>
+              </div>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-sm btn-outline-primary float-right" (click)="showModal(bdModal, '')" [disabled]="!pricingBoundaryEnabled">Add Boundary</button>
+            </div>
+          </div>
+        </div>
+        <table class="table table-sm" formArrayName="routePricings" [ngClass]="{ 'collapse' : !pricingBoundaryEnabled }">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 25%">Type</th>
+              <th scope="col">Boundary</th>
+              <th scope="col" style="width: 15%">Add. Cost</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of routePricings.controls; let i=index" [formGroupName]="i">
+              <td *ngIf="b.get('isFrom').value">From</td>
+              <td *ngIf="b.get('isTo').value">To</td>
+              <td>
+                <div class="input-group input-group-sm mb-3">
+                  <!-- <input type="hidden" class="form-control" formControlName="routeId"> -->
+                  <input type="text" class="form-control" formControlName="boundaryName" readonly>
+                </div>
+              </td>
+              <td>
+                <div class="input-group input-group-sm mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">$</span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="additionalCost">
+                </div>
+              </td>
+              <td><button type="button" class="btn btn-sm" (click)="removeRoutePricing(i, b.get('boundaryId').value)"><i
+                    class="far fa-trash-alt"></i></button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <br />
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-outline-primary" type="submit" [disabled]="!form.valid">Save Route</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+    </div>
+  </div>
+</form>
+
+<!--Boundary modal-->
+<div bsModal #bdModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div id="dialog-sizes-name1" class="modal-title pull-left">
+          <h4>Add Boundary to Route</h4>
+          <small>Select the boundary you want to add to the route.</small>
+        </div>
+        <button type="button" class="close pull-right" (click)="bdModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <agm-map #priceMap [latitude]="blatitude" [longitude]="blongitude" [zoom]="zoom"
+              [streetViewControl]="false">
+              <agm-polygon *ngFor="let b of boundaries" [paths]="b.plainCoord" [fillColor]="b.color"
+                (polyClick)="boundaryClicked(b)" id="b.id" [clickable]="false"></agm-polygon>
+            </agm-map>
+          </div>
+          <div class="col">
+            <select multiple class="custom-select" size="10" [(ngModel)]="selectedBoundary" name="modalBoundarySelect">
+              <option *ngFor="let b of boundaries" (click)="boundaryClicked(b)" [value]="b">{{ b.name }}</option>
+            </select><br />
+            <label for="customRadioInline1">Pricing Type</label><br />
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline1" name="pricingType" [(ngModel)]="selectPricingType"
+                class="custom-control-input" value="From">
+              <label class="custom-control-label" for="customRadioInline1">From</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline2" name="pricingType" [(ngModel)]="selectPricingType"
+                class="custom-control-input" value="To">
+              <label class="custom-control-label" for="customRadioInline2">To</label>
+            </div>
+            <!-- <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" id="customRadioInline3" name="pricingType" [(ngModel)]="selectPricingType"
+                class="custom-control-input" value="Additional">
+              <label class="custom-control-label" for="customRadioInline3">Additional</label>
+            </div> -->
+            <br /><br />
+            <div class="row">
+              <div class="col">
+                <button type="button" class="btn btn-outline-primary" [disabled]="!selectedBoundary || !selectPricingType"
+                  (click)="addRoutePricing(undefined);bdModal.hide()">Add</button>
+              </div>
+              <div class="col">
+                <button type="button" class="btn btn-outline-secondary" (click)="bdModal.hide()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

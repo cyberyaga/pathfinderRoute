@@ -1,0 +1,22 @@
+<div class="input-group">
+    <div class="input-group-prepend" *ngIf="prepend">
+        <span class="input-group-text">{{ prepend }}</span>
+    </div>
+    <input type="text" class="form-control" #addresssearch autocomplete="off" [placeholder]="placeholder"
+        [value]="value"
+        (blur)="onBlur()"
+        [ngClass]="{'is-invalid' : control.touched && control.invalid}">
+    <div class="input-group-append" *ngIf="append">
+        <span class="input-group-text">{{ append }}</span>
+    </div>
+    <div class="invalid-feedback" *ngIf="control.touched && control.hasError('required')">
+        {{ errorMsg }}
+    </div>
+    <div class="invalid-feedback" *ngIf="control.touched && control.hasError('outOfBound')">
+        {{ outOfBoundMsg }}
+    </div>
+    <div class="invalid-feedback" *ngIf="control.touched && control.hasError('wrongdirection')">
+        {{ wrongDirectionMsg }}
+    </div>
+</div>
+<agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" (mapReady)="mapReady($event)"></agm-map>

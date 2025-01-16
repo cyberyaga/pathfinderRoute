@@ -1,0 +1,112 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page">
+      <a [routerLink]='["/admin"]'>Administration</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Manage Users</li>
+  </ol>
+</nav>
+<button type="button" class="btn btn-sm btn-outline-primary"  (click)="openModal(userModal, null)"><i class="fas fa-user-plus"></i>
+  Create User</button>
+<br><br>
+<table class="table table-condense table-striped">
+  <thead>
+    <tr>
+      <td>User Name</td>
+      <td>Email</td>
+      <td>Roles</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users">
+      <td><i class="fas fa-user"></i> {{ u.userName }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.roles }}</td>
+      <td><button type="button" class="btn btn-sm btn-outline-secondary" (click)="openModal(userModal, u)"><i class="fas fa-user-edit"></i>
+          Modify</button></td>
+    </tr>
+  </tbody>
+</table>
+<app-loading *ngIf="!users"></app-loading>
+<div bsModal #userModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">User Account</h4>
+        <button type="button" class="close pull-right" (click)="userModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" class="needs-validation" (keydown.enter)="$event.preventDefault()" (ngSubmit)="submit(form.value)">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="userName">User Name</label>
+                <input type="text" id="userName" name="userName" formControlName="userName" class="form-control" [ngClass]="{ 'disabled': currentUser }">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="eMail">eMail</label>
+                <input type="text" id="eMail" name="eMail" formControlName="eMail" class="form-control" [ngClass]="{ 'disabled': currentUser }">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="alert alert-secondary">
+                <h4 class="alert-heading">Roles</h4>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" formControlName="isDispatcher" id="isDispatcher">
+                  <label class="form-check-label" for="isDispatcher">Dispatcher</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" formControlName="isDriver" id="isDriver">
+                  <label class="form-check-label" for="isDriver">Driver</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" formControlName="isRouteManager" id="isRouteManager">
+                  <label class="form-check-label" for="isRouteManager">Route Manager</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" formControlName="isAdmin" id="isAdmin">
+                  <label class="form-check-label text-danger" for="isAdmin">Admin</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-outline-danger" [disabled]="!currentUser">Delete Account</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-outline-info" (click)="sendPasswordReset(currentUser.id)">Send Password Reset</button>
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-outline-secondary" [disabled]="!form.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,229 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Pickups</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        Pending Pickups
+        <a class="btn btn-outline-primary float-right" [routerLink]="['/pickups/pickups-add']"
+          [queryParams]="{ formMode: 'Pickup' }" role="button">
+          <i class="fas fa-thumbs-up"></i> Add Pickup</a>
+      </div>
+      <div class="card-body">
+        <table class="table table-condense table-hover table-striped">
+          <thead>
+            <tr>
+              <td>
+                <b>#</b>
+              </td>
+              <td>
+                <b>Customer</b>
+              </td>
+              <td>
+                <b>Wait Time</b>
+              </td>
+              <td>
+                <b>Scheduled Pickup Time</b>
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pendingPickups; let i = index" (click)="showDirections(p.addresses, 'pending', i)"
+              [ngClass]="{ 'table-success': i === selectedRow && 'pending' === selectedTable }">
+              <td>{{ p.id }}</td>
+              <td>{{ p.customerName }}</td>
+              <td>{{ p.waitTime | number: '1.0-0' }} Minutes</td>
+              <td>{{ p.pickupTime | date:'short' }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-info pull-right" (click)="openUInfoDialog()">option</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p *ngIf="!pendingPickups">
+          <app-loading></app-loading>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <!-- <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+      <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" (onChange)="dirChange($event)"></agm-direction>
+    </agm-map> -->
+    <div class="card" *ngIf="addressFrom">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-2">
+            <b>From:</b>
+            <br />
+            <b>To:</b>
+          </div>
+          <div class="col-md-5">
+            {{ addressFrom }}
+            <br /> {{ addressTo }}
+          </div>
+          <div class="col-md-2">
+            <b>Distance:</b>
+            <br />
+            <b>Duration:</b>
+          </div>
+          <div class="col-md-3">
+            {{ distance }}
+            <br /> {{ duration }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-6">
+    <div>
+      <tabset>
+        <tab heading="Assigned" id="tab1">
+          <table class="table table-condense table-sm table-hover table-striped">
+            <thead>
+              <tr>
+                <td>
+                  <b>#</b>
+                </td>
+                <td>
+                  <b>Customer</b>
+                </td>
+                <td>
+                  <b>Wait Time</b>
+                </td>
+                <td>
+                  <b>Pickup Time</b>
+                </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of assignedPickups; let i = index" (click)="showDirections(p.addresses, 'assigned', i)"
+                [ngClass]="{ 'table-success': i === selectedRow && 'assigned' === selectedTable }">
+                <td>{{ p.id }}</td>
+                <td>{{ p.customerName }}</td>
+                <td>{{ p.waitTime | number: '1.0-0' }} Minutes</td>
+                <td>{{ p.pickupTime | date:'short' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-info pull-right" (click)="openUInfoDialog()">option</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab heading="Picked Up">
+          <table class="table table-condense table-sm table-hover table-striped">
+            <thead>
+              <tr>
+                <td>
+                  <b>#</b>
+                </td>
+                <td>
+                  <b>Customer</b>
+                </td>
+                <td>
+                  <b>Wait Time</b>
+                </td>
+                <td>
+                  <b>Pickup Time</b>
+                </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of pickedupPickups; let i = index" (click)="showDirections(p.addresses, 'pickedup', i)"
+                [ngClass]="{ 'table-success': i === selectedRow && 'pickedup' === selectedTable }">
+                <td>{{ p.id }}</td>
+                <td>{{ p.customerName }}</td>
+                <td>{{ p.waitTime | number: '1.0-0' }} Minutes</td>
+                <td>{{ p.pickupTime | date:'short' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-info pull-right" (click)="openUInfoDialog()">option</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab heading="Cancelled">
+          <table class="table table-condense table-sm table-hover table-striped">
+            <thead>
+              <tr>
+                <td>
+                  <b>#</b>
+                </td>
+                <td>
+                  <b>Customer</b>
+                </td>
+                <td>
+                  <b>Cancelled</b>
+                </td>
+                <td>
+                  <b>Pickup Time</b>
+                </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of cancelledPickups; let i = index"
+                (click)="showDirections(p.addresses, 'cancelled', i)"
+                [ngClass]="{ 'table-success': i === selectedRow && 'cancelled' === selectedTable }">
+                <td>{{ p.id }}</td>
+                <td>{{ p.customerName }}</td>
+                <td>{{ p.cancelled | date:'short' }}</td>
+                <td>{{ p.pickupTime | date:'short' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-info pull-right" (click)="openUInfoDialog()">option</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+        <tab heading="Completed">
+          <table class="table table-condense table-sm table-hover table-striped">
+            <thead>
+              <tr>
+                <td>
+                  <b>#</b>
+                </td>
+                <td>
+                  <b>Customer</b>
+                </td>
+                <td>
+                  <b>Wait Time</b>
+                </td>
+                <td>
+                  <b>Pickup Time</b>
+                </td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of completedPickups; let i = index"
+                (click)="showDirections(p.addresses, 'completed', i)"
+                [ngClass]="{ 'table-success': i === selectedRow && 'completed' === selectedTable }">
+                <td>{{ p.id }}</td>
+                <td>{{ p.customerName }}</td>
+                <td>{{ p.waitTime | number: '1.0-0' }} Minutes</td>
+                <td>{{ p.pickupTime | date:'short' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-info pull-right" (click)="openUInfoDialog()">option</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

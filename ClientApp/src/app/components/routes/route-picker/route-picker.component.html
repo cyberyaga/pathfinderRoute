@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-8">
+    <b>Select Route:</b>
+    <select class="form-control" [(ngModel)]="selectedRoute" (change)="rChange($event)">
+      <option *ngFor="let rt of routes" [value]="rt.id" [ngClass]="{'text-danger': rt.isCancelled}">{{ rt.routeName }} - {{ rt.scheduledDeparture | date: 'hh:mm a' }} - PU:
+        {{rt.pickupCount}} - PAX: {{rt.passengerCount}}</option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <b>Date:</b>
+    <div class="input-group">
+      <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker
+        #dp="ngx-mydatepicker" [(ngModel)]="calDate" [options]="calOptions"
+        (dateChanged)="routeDateChange($event)" />
+      <span class="input-group-append">
+        <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
+          <i class="far fa-calendar-alt"></i>
+        </button>
+      </span>
+    </div>
+    <!-- <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker [bsValue]="selectedDate" [minDate]="minimumDate" (bsValueChange)="routeDateChange($event)" [bsConfig]="bsConfig"> -->
+  </div>
+</div>

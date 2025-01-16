@@ -1,0 +1,13 @@
+agm-map {
+    height: 500px;
+  }
+  #map {
+    height: 400px;
+}
+
+.list-groupscroll{
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow:scroll;
+  -webkit-overflow-scrolling: touch;
+}

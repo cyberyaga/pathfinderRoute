@@ -1,0 +1,109 @@
+Home
+☐ Display routes per day
+
+
+Customers
+✔ Add Search functionality @done (5/14/2018, 10:55:09 PM)
+☐ Add Sorting to tables
+☐ Fix bug with search
+✔ Create Dialog to Add Customer @done (5/14/2018, 10:54:46 PM)
+✔ Create Dialog to delete/modify Customer @done (5/14/2018, 10:55:12 PM)
+✔ Create Dialog to Add Address @done (3/25/2018, 8:25:04 AM)
+✔ Create Dialog to delete/modify Address @done (3/25/2018, 8:25:05 AM)
+✔ Add Google Maps to display Address @done (3/25/2018, 8:24:53 AM)
+
+
+Drivers
+✔ Display Drivers @done (3/25/2018, 8:25:24 AM)
+✔ Create Dialog to Add Drivers @done (5/14/2018, 10:54:01 PM)
+✔ Create Dialog to modify/delete Drivers @done (5/14/2018, 10:54:03 PM)
+☐ Add Validation to add/modify
+☐ Display drivers on page load
+☐ Add dialog to view Routes of driver
+☐ add dialog to view history/pick ups
+
+Vehicles
+☐ Fix the driver assignment on the vehicle modify window.
+
+Pickups
+✔ Create Pickups page @done (3/25/2018, 8:25:55 AM)
+✔ Create Pickups add page @done (3/25/2018, 8:26:14 AM)
+✔ Show directions on map, when row is clicked @done (5/14/2018, 10:51:43 PM)
+✔ Highlight selected row @done (5/14/2018, 11:20:56 PM)
+✔ Display address on A - B markers @done (5/15/2018, 10:04:40 PM)
+✔ Select pending customers or pending pickups of routes @done (5/18/2018, 10:03:07 PM)
+✔ Display pickup info when row is selected. @done (5/18/2018, 10:02:55 PM)
+✔ Populate Assigned pickups @done (5/15/2018, 10:22:02 PM)
+✔ populate Picked Up passengers @done (5/15/2018, 11:02:19 PM)
+✔ populate cancelled pickups @done (5/15/2018, 11:02:20 PM)
+✔ populate completed (dropped off) passengers @done (5/15/2018, 11:02:24 PM)
+☐ Add loading display when loading data.
+☐ Add sorting to tables
+✔ Add Pickup Info Modal @done (5/16/2018, 10:14:12 PM)
+✔ Setup Cancel query and table @done (5/19/2018, 11:59:45 AM)
+☐ Setup Picked up query and table
+☐ Setup Completed query and table
+☐ Add functionality to the Options button (Cancel/Assign driver/etc)
+
+
+Pickups Add
+✔ Create layout @done (3/25/2018, 8:26:38 AM)
+✔ Add Google Maps functionality @done (3/25/2018, 8:26:51 AM)
+✔ Add Address search capabilities to pickups via google maps @done (3/25/2018, 8:27:20 AM)
+✔ Add ability to calculate direction/distance/time from and to. @done (5/14/2018, 10:43:16 PM)
+✔ Add quick search for Customer @done (5/14/2018, 10:43:18 PM)
+✔ Add date/time fields to destination @done (3/25/2018, 8:57:33 AM)
+☐ Populate Pickup Date and Time with today's date and two hours ahead.
+✔ When selecting customer, autopopulate the pickup address with Customer's primary address. @done (9/9/2018, 10:43:53 PM)
+☐ when customer is searched, set the pickup autocomplete to show all of the user's address on the dropdown.
+☐ Allow user to select from Route to assign pickups (display route capacity in the dropdown).
+☐ Check passenger count when assigning route. So it does not go over.
+☐ allow user to specify a driver.
+✔ Include option to save Customer to database. @done (9/9/2018, 10:44:52 PM)
+☐ Check why city is not populated for some NY cities.
+☐ Allow Pickup entry with a pending dropoff or pickup location.
+☐ Add notes for customer... For price fixing or misc.
+
+Routes
+✔ Create Add/Modify Route page @done (5/21/2018, 12:58:57 AM)
+✔ On Mouse Over, show customer pickup location @done (5/21/2018, 12:59:01 AM)
+✔ Add fields to model for start point and end point of route. @done (7/18/2018, 6:04:11 PM)
+✔ On Mouse Out revert map position to displaying the entire route. (added a button to revert) @done (7/4/2018, 5:54:11 PM)
+✔ Fix reset map button. It screws up waypoints location. @done (9/12/2018, 8:43:00 PM)
+☐ assign different marker icons on waypoints.
+✔ Display Assigned Vehicle and Drivers. @done (2/9/2019, 11:56:43 AM)
+✔ Add Options to cancel pickup. @done (7/18/2018, 6:04:25 PM)
+✔ Add Options to move pickup to another route or day. @done (9/12/2018, 8:41:57 PM)
+✔ Add Options to confirm pickup. @done (7/18/2018, 6:04:28 PM)
+☐ Display Vehicle location on map.
+✔ Add Loading message when fetching data. @done (9/12/2018, 8:42:08 PM)
+☐ Put warning on route view page when missing a dropoff or pickup address.
+✔ Assign drivers and vehicles on a daily basis to specific routes. @done (2/9/2019, 11:58:15 AM)
+☐ Add ETA For route pickups
+☐ Add people on a waiting list.
+☐ Add adult/child passengers
+☐ Add space for luggage
+
+Routes - Add
+✔ Add field for base price. @done (7/18/2018, 6:04:40 PM)
+✔ Add form validation. @done (9/9/2018, 10:45:33 PM)
+✔ Enable form to submit data @done (7/18/2018, 6:04:49 PM)
+
+Pricing Boundaries
+☐ Enable creation of boundaries.
+
+Routes - Manager
+✔ Add interface @done (9/9/2018, 10:46:15 PM)
+✔ Create option to cancel a route for a day. (in exception table) @done (2/9/2019, 11:59:51 AM)
+☐ Create option to add a vehicle to the route to increase capacity (in exception table)
+
+
+App Config page
+☐ Option to enable Pickup Module
+☐ Option to enable Route Module
+☐ Route Module Options:
+    Allow creation of pickups without origin address
+    Allow creation of pickups without destination address
+    Allow pickups to be placed on stand-by
+☐ Allow dispatchers to:
+    

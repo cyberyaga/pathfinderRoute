@@ -1,0 +1,54 @@
+☐ MENU - Disable the pickup Menu
+
+✔ Route View - Show Price on pickups @done (4/3/2019, 1:13:00 AM)
+✔ Route View - Make it possible to hide boundaries and traffic layer. @done (4/4/2019, 4:16:38 PM)
+☐ Route View - Implement time restrictions on add pickup.
+
+✔ Pickup add - When the customer is selected from dropdown, pickup address doesn't trigger google place on map. @done (4/3/2019, 12:30:26 PM)
+✔ Pickup add - Address autocomplete doesn't put the full value onto the reactive form. @done (4/3/2019, 12:32:17 PM)
+✔ Pickup add - make the cost portion part of the new record. @done (4/3/2019, 12:32:20 PM)
+✔ Pickup add - Notify user when the address is out of bound or backwards. @done (4/3/2019, 11:48:55 PM)
+✘ Pickup add - Make sure the record displays properly when loaded from db. @cancelled (4/3/2019, 1:38:34 AM)
+✔ Pickup add - Breadcrum "Route" doesn't provide proper date to RouteView component @done (4/3/2019, 1:37:20 AM)
+✔ Pickup add - Make sure the form validation includes the check for out of bound and destination. @done (4/4/2019, 8:59:46 AM)
+☐ Pickup add - Find out why length in phoneNumber doesn't work.
+✔ Pickup add - when trying to search for customer, address autocomplete stops working and doesn't submit customer name. @done (5/2/2019, 4:40:46 PM)
+✔ Pickup add - Enable places search on google maps auto complete. @done (5/6/2019, 9:20:07 PM)
+☐ Pickup add - Enable stand by calculated with capacity.
+
+☐ Route add - Make sure that boundaries are not displayed in the boundary list when they are already assigned.
+✔ Route add - Make sure that form cannot be submitted if no FROM and TO boundary is added when boundaries are enabled. @done (4/8/2019, 1:17:33 PM)
+☐ Route add - Make sure that at least 1 Route Day of the week is selected.
+☐ Route add - Create a boundary copy from route dialog.
+☐ Route add - Allow for multiple vehicle to be added to Route Day to increase capacity.
+✔ Route add - When editing the price boundaries that are modified are not saving. @done (5/6/2019, 9:50:50 PM)
+
+✔ Route - When vehicle is assigned to routeDay, controller throws error on query. @done (5/2/2019, 4:41:30 PM)
+☐ Route - Add route status indicator (departed... etc).
+
+✔ Pricing boundary - Add card doesn't show when you click "Add New Boundary". @done (4/5/2019, 1:13:46 AM)
+✔ Pricing boundary - Make sure this works entirely. @done (4/5/2019, 1:13:48 AM)
+✔ Pricing boundary - Click still works boundary select even if it's disabled. @done (4/5/2019, 10:59:57 AM)
+☐ Pricing boundary - Disable dragging of the boundary.
+
+✔ Customers - When customer record is clicked, Controller throws an object reference error (Maybe due to no pickups) @done (4/5/2019, 11:08:41 PM)
+✔ Customers - Address modal dialog broken (implement bootstrap modal). @done (4/6/2019, 8:52:37 AM)
+✔ Customers - Add Price to Recent Pickups. @done (4/6/2019, 1:36:43 PM)
+☐ Customers - Address Autocomplete is behind modal
+
+✔ Vehicles - Get rid of or implement assigned routes card. @done (4/9/2019, 10:06:19 PM)
+☐ Vehicles - Add validation text.
+☐ Vehicles - Set schedule for when vehicle is not available.
+
+☐ Drivers - Hide Other Info card.
+
+☐ Assigned Routes - Implement functionality
+
+✔ Admin - Set Driver when Driver Role is clicked. @done (5/2/2019, 4:53:48 PM)
+☐ Admin - Enable password reset email and page.
+
+
+
+
+
+

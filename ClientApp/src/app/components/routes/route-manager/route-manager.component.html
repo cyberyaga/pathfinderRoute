@@ -1,0 +1,98 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item" aria-current="page"><a [routerLink]='["/routes"]'>Routes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Route Manager</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-12">
+    <div class="card border-danger">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-2">
+            Routes
+          </div>
+          <div class="col-2">
+            <b>Date:</b>
+            <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker [bsValue]="selectedDate"
+              (bsValueChange)="routeDateChange($event)" [bsConfig]="bsConfig">
+          </div>
+          <div class="col">
+            <a class="btn btn-sm btn-outline-primary" role="button" [routerLink]='["/routes/route-manager/route-add"]'>
+              <i class="fas fa-cogs"></i> Add Route</a>
+            <a href="" class="btn btn-sm btn-outline-primary" role="button"
+              [routerLink]='["/routes/pricing-boundary"]'>Pricing Boundary</a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-condense table-hover table-striped">
+        <thead>
+          <tr>
+            <td>
+              <b>#</b>
+            </td>
+            <td>
+              <b>Route</b>
+            </td>
+            <td><b>Days</b></td>
+            <td>
+              <b>Departure Time</b>
+            </td>
+            <td>
+              <b>Assigned Vehicle</b>
+            </td>
+            <td>
+              <b>Assigned Driver</b>
+            </td>
+            <td><b>Status</b></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of routes" (click)="routeClick(r.id)" style="cursor: pointer;">
+            <td>{{ r.id }}</td>
+            <td>{{ r.routeName }}</td>
+            <td>
+              <span class="badge badge-primary" *ngIf="r.routeDayMon">Mon</span>
+              <span class="badge badge-primary" *ngIf="r.routeDayTue">Tue</span>
+              <span class="badge badge-primary" *ngIf="r.routeDayWed">Wed</span>
+              <span class="badge badge-primary" *ngIf="r.routeDayThu">Thu</span>
+              <span class="badge badge-primary" *ngIf="r.routeDayFri">Fri</span><br />
+              <span class="badge badge-primary" *ngIf="r.routeDaySat">Sat</span>
+              <span class="badge badge-primary" *ngIf="r.routeDaySun">Sun</span>
+            </td>
+            <td>{{ r.scheduledDeparture | date: 'hh:mm a' }}</td>
+            <td (click)="$event.stopPropagation();">
+              <select id="vehicleId" name="vehicleId" class="form-control" [(ngModel)]="r.vehicleId"
+                (change)="routeChange(r)">
+                <option value=""></option>
+                <option *ngFor="let v of vehicles" [value]="v.id">{{ v.description }} - C: {{ v.capacity }}</option>
+              </select>
+            </td>
+            <td (click)="$event.stopPropagation();">
+              <select id="driverId" name="driverId" class="form-control" [(ngModel)]="r.driverId"
+                (change)="routeChange(r)">
+                <option value=""></option>
+                <option *ngFor="let d of drivers" [value]="d.id">{{ d.firstName + " " + d.lastName}}</option>
+              </select>
+            </td>
+            <td (click)="$event.stopPropagation();">
+              <div class="btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-outline-danger" [ngClass]="{'active' : r.isCancelled }">
+                  <input type="checkbox" checked autocomplete="off" [(ngModel)]="r.isCancelled"
+                    (change)="routeChange(r)"> {{ r.isCancelled ? "Cancelled" : "Cancel" }}
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="!routes">
+      <app-loading></app-loading>
+    </p>
+  </div>
+  <div class="col-6"></div>
+</div>

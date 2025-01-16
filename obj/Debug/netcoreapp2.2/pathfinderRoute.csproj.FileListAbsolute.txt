@@ -1,0 +1,48 @@
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.deps.json
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.runtimeconfig.json
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.runtimeconfig.dev.json
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.dll
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.pdb
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.Views.dll
+/home/cyberyaga/Projects/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.Views.pdb
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csprojAssemblyReference.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csproj.CoreCompileInputs.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorAssemblyInfo.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorAssemblyInfo.cs
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.AssemblyInfoInputs.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.AssemblyInfo.cs
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.TagHelpers.input.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.TagHelpers.output.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorCoreGenerate.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/Razor/Pages/Error.g.cshtml.cs
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/Razor/Pages/_ViewImports.g.cshtml.cs
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorTargetAssemblyInfo.cache
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorTargetAssemblyInfo.cs
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.Views.pdb
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.dll
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.pdb
+/home/cyberyaga/Projects/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csproj.CopyComplete
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.deps.json
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.runtimeconfig.json
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.runtimeconfig.dev.json
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.dll
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.pdb
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.Views.dll
+/home/cyberyaga/GIT Repository/pathfinderRoute/bin/Debug/netcoreapp2.2/pathfinderRoute.Views.pdb
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csprojAssemblyReference.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csproj.CoreCompileInputs.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorAssemblyInfo.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorAssemblyInfo.cs
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.AssemblyInfoInputs.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.AssemblyInfo.cs
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.TagHelpers.input.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.TagHelpers.output.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorCoreGenerate.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/Razor/Pages/Error.g.cshtml.cs
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/Razor/Pages/_ViewImports.g.cshtml.cs
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorTargetAssemblyInfo.cache
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.RazorTargetAssemblyInfo.cs
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.Views.pdb
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.dll
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.pdb
+/home/cyberyaga/GIT Repository/pathfinderRoute/obj/Debug/netcoreapp2.2/pathfinderRoute.csproj.CopyComplete

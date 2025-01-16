@@ -1,0 +1,222 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/routes"]'>Routes</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Route View</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <app-route-picker [selectedRoute]="currentRoute" [selectedDate]="selectedDate"
+          (routeChange)="routeChange($event)"></app-route-picker>
+      </div>
+    </div>
+    <br />
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Pickups<span class="badge badge-danger" *ngIf="currentRouteCancelled">Cancelled</span>
+          <a class="btn btn-outline-primary float-right" [routerLink]="['/pickups/pickups-add']"
+            [queryParams]="{ formMode: 'Route', routeId: currentRoute, routeDate: selectedDate | date: 'MM/dd/yyyy' }"
+            role="button" [ngClass]="{'disabled': addDisabled || currentRouteCancelled }">
+            <i class="fas fa-thumbs-up"></i> Add Pickup</a>
+        </div>
+      </div>
+      <table class="table table-sm table-hover table-striped">
+        <thead>
+          <tr>
+            <td>
+              <b>#</b>
+            </td>
+            <td>
+              <b>Customer</b>
+            </td>
+            <td>
+              <b>PAX</b>
+            </td>
+            <td>
+              <b>Picked Up</b>
+            </td>
+            <td>
+              <b>Dropped Off</b>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!pickups">
+            <td colspan="6">
+              <app-loading></app-loading>
+            </td>
+          </tr>
+          <tr [ngClass]="{'text-muted': p.isCancelled, 'table-success': p === selectedCustomerPickup }"
+            *ngFor="let p of pickups" (click)="showLocation(p.addresses, p)">
+            <td>{{ p.id }}</td>
+            <td>{{ p.customerName }}</td>
+            <td>{{ p.numberOfPassengers }}</td>
+            <td></td>
+            <td></td>
+            <td>
+              <i *ngIf="p.isConfirmed" class="far fa-calendar-check text-success"
+                tooltip="Confirmed: {{ p.confirmed | date: 'short' }}"></i>
+              <i *ngIf="p.isCancelled" class="far fa-calendar-times text-danger"
+                tooltip="Cancelled: {{ p.cancelled | date: 'short' }}"></i>
+            </td>
+            <td class="text-right">
+              <ng-template #popTemplate>
+                <button type="button" class="btn btn-sm btn-outline-success" (click)="confirmPickup(p)"
+                  [disabled]="p.isCancelled || p.isConfirmed || addDisabled">
+                  <i class="fas fa-check-circle"></i> Confirm
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary" [disabled]="addDisabled"
+                  (click)="openModal(moveTemplate, p.id)">
+                  <i class="fas fa-arrow-alt-circle-right"></i> Move
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled="disabled">
+                  <i class="fas fa-pen-square"></i> Modify
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="openModal(cancelTemplate, p.id)"
+                  [disabled]="p.isCancelled || addDisabled" [ngClass]="{'disabled': addDisabled }">
+                  <i class="fas fa-ban"></i> Cancel
+                </button>
+              </ng-template>
+              <button type="button" class="btn btn-sm btn-outline-info pull-right" [popover]="popTemplate"
+                [outsideClick]="true" placement="left" popoverTitle="Pickup Options">
+                <i class="fas fa-cog"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            Map
+          </div>
+          <agm-map #map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapReady)="mapReady($event)">
+            <agm-marker [latitude]="c.lat" [longitude]="c.lng" [opacity]="c.opacity" *ngFor="let c of cancelledPicks">
+            </agm-marker>
+            <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination" [waypoints]="dir.waypoints"
+              [optimizeWaypoints]="dir.optimizeWaypoints" [renderOptions]="dir.mapOptions"></agm-direction>
+            <agm-polygon *ngFor="let b of assignedPriceRoute" [paths]="b.boundary.plainCoord"
+              [fillColor]="b.boundary.color" [clickable]="false" [visible]="showBoundaries.checked"></agm-polygon>
+          </agm-map>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col-3">
+                <button type="button" class="btn btn-outline-primary" (click)="setMap()">
+                  <i class="fab fa-centercode"></i> Reset Map
+                </button>
+              </div>
+              <div class="col align-text-bottom">
+                <div class="custom-control custom-checkbox">
+                  <input #showBoundaries type="checkbox" class="custom-control-input" id="showBoundaries" checked>
+                  <label class="custom-control-label" for="showBoundaries">Show Boundaries</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="toggleTrafficcheck"
+                    [(ngModel)]="showTrafficLayer" (change)="toggleTraffic()">
+                  <label class="custom-control-label" for="toggleTrafficcheck">Show Traffic</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <br />
+        <div class="card" *ngIf="selectedCustomerPickup">
+          <div class="card-header">
+            <a class="btn btn-sm btn-outline-primary"
+              [routerLink]='["/customers/" + selectedCustomerPickup.customerId ]' role="button"
+              tooltip="View Customer"><i class="fas fa-street-view"></i></a>
+            <b> Customer Name:</b> {{ selectedCustomerPickup.customerName }}
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div *ngFor="let a of selectedCustomerPickup.addresses">
+                  <b>Address
+                    <span *ngIf="a.sequence === 0">From:</span>
+                    <span *ngIf="a.sequence === 100">To:</span>
+                  </b>
+                  <br /> {{ a.address1 }} {{ a.city }}, {{ a.state }} {{ a.zipCode }}
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div>
+                  <b>Telephone:</b>
+                  <br /> {{ selectedCustomerPickup.phoneNumber }}
+                </div>
+                <div>
+                  <b>Passengers:</b>
+                  <br /> {{ selectedCustomerPickup.numberOfPassengers }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col"><b>Notes:</b><br />
+                {{selectedCustomerPickup.notes}}
+              </div>
+              <div class="col-md-5">
+                <b>Price:</b><br />
+                ${{selectedCustomerPickup.price}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+  </div>
+</div>
+
+<ng-template #cancelTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Cancel Pickup</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to cancel this pickup?
+    <br />
+    <button type="button" class="btn btn-outline-danger" (click)="confirmCancel()">
+      <i class="fas fa-ban"></i> Cancel pickup</button>
+  </div>
+</ng-template>
+
+<ng-template #moveTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Move Pickup</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    Please select where to move this pickup:
+    <app-route-picker [selectedRoute]="currentRoute" [selectedDate]="selectedDate"
+      (routeChange)="routeMoveChange($event)"></app-route-picker>
+    <br />
+    <button type="button" class="btn btn-outline-primary" [disabled]="allowMove" (click)="movePickup(modalRef)">
+      <i class="fas fa-arrow-alt-circle-right"></i> Move pickup</button>
+    <br />
+  </div>
+</ng-template>

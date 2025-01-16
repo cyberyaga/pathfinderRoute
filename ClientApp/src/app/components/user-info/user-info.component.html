@@ -1,0 +1,18 @@
+<ul class="list-group">
+  <li class="list-group-item list-group-item-secondary">
+      <a class="nav-link" [routerLink]='["/userpreference"]'><i class="fas fa-users-cog"></i> User Preference</a></li>
+  <li class="list-group-item list-group-item-light">
+    <small>
+      User Name: {{ username }}<br />
+      Full Name: {{ fullname }}<br />
+      Email: {{ email }}<br />
+      User Role:
+      <div *ngFor="let r of userroles">
+        <i class="fas fa-suitcase-rolling"></i> {{r}} <br>
+      </div>
+      <br />
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="logout()"><i class="fas fa-sign-out-alt"></i>
+        Logout</button>
+    </small>
+  </li>
+</ul>

@@ -1,0 +1,9 @@
+@media (max-width: 467px) {
+  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+  .body-content {
+    padding-top: 50px;
+  }
+  .text-responsive {
+    font-size: calc(100% + 1vw + 1vh);
+  }
+}

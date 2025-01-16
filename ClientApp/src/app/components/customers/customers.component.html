@@ -1,0 +1,147 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Customers</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        Customer Search<button type="button" class="btn btn-outline-primary float-right"
+          *ngIf="customers$ | async as customer" (click)="openCustInfoDialog()">Add Customer</button>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <input type="text" class="form-control" #searchBox id="search-box" (keyup)="search(searchBox.value)">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <table class='table table-hover table-striped'>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of customers$ | async" (click)="getCustomerInfo(customer.id)"
+            [ngClass]="{ 'table-success': customer.id === currentCustomer}">
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.firstName }}</td>
+            <td>{{ customer.lastName }}</td>
+            <td>{{ customer.phoneNumber }}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-info pull-right" (click)="openCustInfoDialog(customer)">Modify</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="!customers$">
+        <app-loading></app-loading>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col">
+        <div class="card" *ngIf="currentCustomer">
+          <div class="card-header">
+            Address<button class="btn btn-outline-primary float-right" *ngIf="currentCustomer" (click)="openAddressDialog()">Add Address</button>
+          </div>
+          <table class='table' *ngIf="currentCustomer">
+            <thead>
+              <tr>
+                <td>Address1</td>
+                <td>Address2</td>
+                <td>City</td>
+                <td>State</td>
+                <td>Zip Code</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let custadd of customerAddress">
+                <td>{{ custadd.address1 }}</td>
+                <td>{{ custadd.address2 }}</td>
+                <td>{{ custadd.city }}</td>
+                <td>{{ custadd.state }}</td>
+                <td>{{ custadd.zipCode }}</td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-info" (click)="openAddressDialog(custadd)">Modify</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col">
+    <div class="card" *ngIf="currentCustomer">
+      <div class="card-header">
+        Recent Pickups
+      </div>
+      <table class='table table-sm' *ngIf="currentCustomer">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Route</th>
+            <th scope="col">Date</th>
+            <th scope="col">PAX</th>
+            <th scope="col">Price</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of customerPickups" (click)="showLocation(p.addresses, p.id)"
+            [ngClass]="{ 'table-success': p.id === currentPickup}">
+            <td>{{ p.id }}</td>
+            <td>{{ p.routeName }}</td>
+            <td>{{ p.pickupTime | date:'MM/dd/yyy' }}</td>
+            <td>{{ p.numberOfPassengers }}</td>
+            <td>${{ p.price }}</td>
+            <td>
+              <i *ngIf="p.isConfirmed" class="far fa-calendar-check text-success"
+                tooltip="Confirmed: {{ p.confirmed | date: 'short' }}"></i>
+              <i *ngIf="p.isCancelled" class="far fa-calendar-times text-danger"
+                tooltip="Cancelled: {{ p.cancelled | date: 'short' }}"></i>
+            </td>
+            <td>
+              <a class="btn btn-sm btn-outline-primary" [routerLink]='["/routes/route-view/" + p.routeId ]'
+                [queryParams]="{ routeDate: p.pickupTime | date: 'yyyy-MM-dd' }" role="button">
+                <i class="fas fa-link"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card" *ngIf="currentCustomer && dir">
+      <div class="card-header">
+        Information
+      </div>
+      <agm-map [streetViewControl]="false" [fullscreenControl]="true">
+        <agm-direction *ngIf="dir" [origin]="dir.origin" [destination]="dir.destination"
+          [renderOptions]="dir.mapOptions"></agm-direction>
+      </agm-map>
+      <b>Address From:</b> {{ originAddress }}<br />
+      <b>Address To:</b> {{ destAddress }}
+    </div>
+  </div>
+</div>

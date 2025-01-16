@@ -1,0 +1,111 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]='["/"]'>Home</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Vehicles</li>
+  </ol>
+</nav>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        Vehicles
+        <button type="button" class="btn btn-sm btn-outline-primary float-right" aria-label="AddVehicle"
+          (click)="showVehicleDialog(null)">
+          <span aria-hidden="true">
+            <i class="fas fa-plus-circle"></i> Add Vehicle
+          </span>
+        </button>
+      </div>
+      <table class='table table-hover'>
+        <thead class="thead-light">
+          <tr>
+            <th>Id</th>
+            <th>Vehicle</th>
+            <th>Capacity</th>
+            <th>Driver</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let v of vehicles" (click)="selectVehicle(v)"
+            [ngClass]="{ 'table-success': v === selectedVehicle }">
+            <td><i class="fas fa-car"></i> {{ v.id }}</td>
+            <td>{{ v.description }}</td>
+            <td>{{ v.capacity }}</td>
+            <td>{{ v.driver ? v.driver.firstName + " " + v.driver.lastName : "" }}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-secondary pull-right"
+                (click)="showVehicleDialog(v)">Modify</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="!vehicles">
+        <app-loading></app-loading>
+      </p>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card" *ngIf="selectedVehicle">
+      <div class="card-header">
+        Assigned Routes
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Not yet implemented</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #vehicleModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Add Vehicle</h4>
+        <button type="button" class="close pull-right" (click)="vehicleModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" class="needs-validation" (ngSubmit)="submitVehicleData(form.value)">
+          <input type="hidden" name="vehicleId" id="vehicleId" formControlName="vehicleId">
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="vehicleName">Vehicle Name</label>
+                <input type="text" class="form-control" id="vehicleName" name="vehicleName"
+                  formControlName="vehicleName">
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label for="vehicleName">Capacity</label>
+                <input type="number" class="form-control" id="capacity" name="capacity" formControlName="capacity">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="driver">Driver</label>
+                <select class="form-control" name="driver" id="driver" formControlName="driver">
+                  <option></option>
+                  <option *ngFor="let d of drivers" [value]="d">{{ d.firstName }} {{ d.lastName }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
